@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum for subscription plans
+enum SubscriptionPlan {
+  FREE
+  PRO
+}
+
+// Enum for user roles
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+// Tenant model - represents companies/organizations
+model Tenant {
+  id           String           @id @default(cuid())
+  slug         String           @unique // e.g., "acme", "globex"
+  name         String           // e.g., "Acme Corp", "Globex Corporation"
+  subscription SubscriptionPlan @default(FREE)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  // Relations
+  users User[]
+  notes Note[]
+
+  @@map("tenants")
+}
+
+// User model with tenant association
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Should be hashed
+  role      UserRole @default(MEMBER)
+  tenantId  String   // Foreign key to tenant
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  notes  Note[]
+
+  // Indexes for performance
+  @@index([tenantId])
+  @@index([email, tenantId])
+  @@map("users")
+}
+
+// Note model with tenant isolation
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  tenantId  String   // Foreign key to tenant for isolation
+  authorId  String   // Foreign key to user
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  author User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Indexes for performance and tenant isolation
+  @@index([tenantId])
+  @@index([tenantId, authorId])
+  @@index([tenantId, createdAt])
+  @@map("notes")
+}
+
+// Session model for JWT token management (optional but recommended)
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("sessions")
+}
