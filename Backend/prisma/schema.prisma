@@ -22,11 +22,11 @@ enum UserRole {
   MEMBER
 }
 
-// Tenant model - represents companies/organizations
+
 model Tenant {
   id           String           @id @default(cuid())
   slug         String           @unique // e.g., "acme", "globex"
-  name         String           // e.g., "Acme Corp", "Globex Corporation"
+  name         String           
   subscription SubscriptionPlan @default(FREE)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
@@ -79,16 +79,3 @@ model Note {
   @@map("notes")
 }
 
-// Session model for JWT token management (optional but recommended)
-model Session {
-  id        String   @id @default(cuid())
-  userId    String
-  token     String   @unique
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  @@index([userId])
-  @@index([token])
-  @@index([expiresAt])
-  @@map("sessions")
-}

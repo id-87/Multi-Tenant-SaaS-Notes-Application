@@ -2,11 +2,23 @@ const express=require("express")
 const router=express.Router()
 const {PrismaClient}=require("../generated/prisma")
 
+
 const prisma = new PrismaClient()
 
 
 router.post("/",async(req,res)=>{
-    const {title,content,tenantId,authorId}=req.body
+    
+
+    const {title,content,tenantId,authorId,sub}=req.body
+    let notesCount=await prisma.note.count({where:{
+        tenantId:tenantId
+    }})
+
+    if(sub==="Free"){
+        if (notesCount>=3){
+            return res.send(404).status("Upgrade to pro for adding more notes")
+        }
+    }
     const note=await prisma.note.create({
         data:{
             title:title,
@@ -21,7 +33,11 @@ router.post("/",async(req,res)=>{
 })
 
 router.get("/",async(req,res)=>{
-    const data=await prisma.note.findMany()
+
+    const ten=te //get this from token somehow
+    const data=await prisma.note.findMany({where:{
+        tenantId:ten
+    }})
     res.status(200).send(data)
 
 
@@ -52,3 +68,5 @@ router.delete("/:id",async(req,res)=>{
     res.status(200).send(`Note deleted with id:${id}`)
 
 })
+
+module.exports=router
