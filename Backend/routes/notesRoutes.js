@@ -47,5 +47,8 @@ router.put("/:id",async (req,res)=>{
 })
 
 router.delete("/:id",async(req,res)=>{
-    
+    const id=Number(req.params.id)
+    const query=await prisma.note.delete({where:{id:id}})
+    res.status(200).send(`Note deleted with id:${id}`)
+
 })
