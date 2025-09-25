@@ -4,7 +4,7 @@ const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState('MEMBER')
-  const [tenantId, setTenantId] = useState('')
+  const [tenantSlug, setTenantSlug] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault() 
@@ -22,7 +22,7 @@ const Signup = () => {
       setEmail('')
       setPassword('')
       setRole('MEMBER')
-      setTenantId('')
+      setTenantSlug('')
     } else {
       alert('Signup failed')
     }
@@ -46,8 +46,8 @@ const Signup = () => {
           </select>
         </label>
         
-        <label>Tenant Id:
-          <input type="text" value={tenantId} onChange={(e) => setTenantId(e.target.value)} required />
+        <label>Tenant Slug:
+          <input type="text" value={tenantSlug} onChange={(e) => setTenantSlug(e.target.value)} required />
         </label>
         
         <button type="submit">Sign Up</button>
