@@ -1,0 +1,30 @@
+.update-notes-container {
+    padding: 20px;
+}
+
+.update-notes-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 10px;
+}
+
+.update-notes-form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-notes-form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.update-notes-form button {
+    padding: 8px;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}

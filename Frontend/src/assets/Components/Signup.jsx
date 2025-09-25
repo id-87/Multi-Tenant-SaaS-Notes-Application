@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './Signup.css'
 
 const Signup = () => {
   const [email, setEmail] = useState('')
@@ -29,8 +30,8 @@ const Signup = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="signup-container">
+      <form onSubmit={handleSubmit} className="signup-form">
         <label>Email:
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </label>

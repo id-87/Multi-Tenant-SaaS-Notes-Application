@@ -1,0 +1,30 @@
+.create-notes-container {
+    padding: 20px;
+}
+
+.create-notes-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 10px;
+}
+
+.create-notes-form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-notes-form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.create-notes-form button {
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}

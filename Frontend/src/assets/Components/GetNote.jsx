@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './GetNote.css'
 
 const GetNote = () => {
     const [id, setId] = useState("")
@@ -13,8 +14,8 @@ const GetNote = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="get-note-container">
+            <form onSubmit={handleSubmit} className='get-note-form'>
                 <input 
                     placeholder="Enter Note ID" 
                     value={id} 
@@ -25,7 +26,7 @@ const GetNote = () => {
             </form>
 
             {note && (
-                <div>
+                <div className='note-details'>
                     <h4>{note.title}</h4>
                     <p>{note.content}</p>
                 </div>

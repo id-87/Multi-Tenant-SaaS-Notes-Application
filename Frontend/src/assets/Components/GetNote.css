@@ -1,0 +1,38 @@
+.get-note-container {
+    padding: 20px;
+}
+
+.get-note-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.get-note-form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.get-note-form button {
+    padding: 5px 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.note-details {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.note-details h4 {
+    margin: 0 0 5px 0;
+}
+
+.note-details p {
+    margin: 0;
+}

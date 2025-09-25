@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './AllNotes.css'
 
 const AllNotes = () => {
     const [notes, setNotes] = useState([])
@@ -10,9 +11,9 @@ const AllNotes = () => {
     }, [])
 
     return (
-        <div>
+        <div className="notes-container">
             {notes.map(note => (
-                <div key={note.id}>
+                <div key={note.id} className="note-card">
                     <h4>{note.title}</h4>
                     <p>{note.content}</p>
                 </div>

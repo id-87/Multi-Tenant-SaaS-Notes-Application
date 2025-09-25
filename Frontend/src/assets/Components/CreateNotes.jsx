@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import './CreateNotes.css'
 
 const CreateNotes = () => {
     const [title,setTitle]=useState("")
@@ -21,8 +22,8 @@ const CreateNotes = () => {
 
     }
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="create-notes-container">
+      <form onSubmit={handleSubmit} className='create-note-form'>
         <label>Title:<input type="text" id='title' value={title} onChange={(e)=>setTitle(e.target.value) } required/></label>
         <label>Content:<input type="text" id='content' value={content} onChange={(e)=>setContent(e.target.value)} required /></label>
         <label>Tenant ID:<input type="text" id='tenantId' value={tenantId} onChange={(e)=>setTid(e.target.value)} required /></label>
