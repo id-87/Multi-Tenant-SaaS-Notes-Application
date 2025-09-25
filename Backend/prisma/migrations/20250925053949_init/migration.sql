@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `User`;
-
 -- CreateTable
 CREATE TABLE `tenants` (
     `id` VARCHAR(191) NOT NULL,
@@ -49,21 +40,6 @@ CREATE TABLE `notes` (
     INDEX `notes_tenantId_idx`(`tenantId`),
     INDEX `notes_tenantId_authorId_idx`(`tenantId`, `authorId`),
     INDEX `notes_tenantId_createdAt_idx`(`tenantId`, `createdAt`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `sessions` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `token` VARCHAR(191) NOT NULL,
-    `expiresAt` DATETIME(3) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-
-    UNIQUE INDEX `sessions_token_key`(`token`),
-    INDEX `sessions_userId_idx`(`userId`),
-    INDEX `sessions_token_idx`(`token`),
-    INDEX `sessions_expiresAt_idx`(`expiresAt`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -1,12 +1,14 @@
 const express=require("express")
-const {PrismaClient}=require("./generated/prisma")
+const {PrismaClient}=require("@prisma/client")
 const notesRouter=require("./routes/notesRoutes")
 const authRoutes=require("./routes/authRoutes")
 
 
 const app=express()
+
+app.use(express.json())
 app.get("/health",(req,res)=>{
-    res.status("ok")
+    res.send("ok")
 })
 app.use("/notes",notesRouter)
 app.use("/auth",authRoutes)

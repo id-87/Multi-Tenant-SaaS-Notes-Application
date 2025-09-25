@@ -1,10 +1,10 @@
 const express=require("express")
 const router=express.Router()
-const {PrismaClient}=require("../generated/prisma")
+const {PrismaClient}=require("@prisma/client")
 
 
 const prisma = new PrismaClient()
-
+router.use(express.json())
 
 router.post("/",async(req,res)=>{
     
@@ -33,6 +33,7 @@ router.post("/",async(req,res)=>{
 })
 
 router.get("/",async(req,res)=>{
+    let te
 
     const ten=te //get this from token somehow
     const data=await prisma.note.findMany({where:{
@@ -44,7 +45,7 @@ router.get("/",async(req,res)=>{
 })
 
 router.get("/:id",async(req,res)=>{
-    const id=Number(req.params.id)
+    const id=(req.params.id)
     const data=await prisma.note.findUnique({
         where:{id:id}
     })
@@ -53,9 +54,9 @@ router.get("/:id",async(req,res)=>{
 })
 
 router.put("/:id",async (req,res)=>{
-    const id=Number(req.params.id)
+    const id=(req.params.id)
     const body=req.body
-    const query=await prisma.note.updateOne({
+    const query=await prisma.note.update({
         where:{id:id},
         data:body
     })
@@ -63,10 +64,14 @@ router.put("/:id",async (req,res)=>{
 })
 
 router.delete("/:id",async(req,res)=>{
-    const id=Number(req.params.id)
+    const id=(req.params.id)
     const query=await prisma.note.delete({where:{id:id}})
     res.status(200).send(`Note deleted with id:${id}`)
 
 })
 
 module.exports=router
+
+
+
+

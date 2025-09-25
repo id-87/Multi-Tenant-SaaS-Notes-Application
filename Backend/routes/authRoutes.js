@@ -2,23 +2,23 @@ const express=require("express")
 const router=express.Router()
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const {PrismaClient}=require("../generated/prisma")
+const {PrismaClient}=require("@prisma/client")
 const prisma=new PrismaClient()
 const jwt=require("jsonwebtoken")
-
+router.use(express.json())
 router.post("/signup",async(req,res)=>{
-    const{email,password,role}=req.body
+    const{email,password,role,tenantId}=req.body
     const temp=await prisma.user.findFirst({where:
         {email:email}
     })
     if (temp){
-        return res.send(400).send("User already exists")
+        res.send(400).send("User already exists")
     }
 
 
 
     
-    bcrypt.hash(password, salt,async function(err, hash) {
+    bcrypt.hash(password, saltRounds,async function(err, hash) {
         await prisma.user.create({
             data:{
                 email:email,
@@ -28,7 +28,7 @@ router.post("/signup",async(req,res)=>{
         })
     });
 
-res.status(200).send("User created successfully now please complete the profile")
+res.status(200).send("User created successfully")
 
 })
 
@@ -41,14 +41,23 @@ router.post("/subs",async(req,res)=>{
 
         subscription:sub
     }})
+    res.send("subs fetched")
 })
 
 
 router.post("/login",async(req,res)=>{
+    // console.log(req);
+    
+    
+    
+    
     const {email,password}=req.body
     const entry=await prisma.user.findFirst({
         where:{email:email}
     })
+
+    // console.log(entry);
+    
     const hash=entry.password
 
     bcrypt.compare(password, hash, function(err, result) {
@@ -56,10 +65,12 @@ router.post("/login",async(req,res)=>{
         const token=jwt.sign({email:email},"ver")
         res.cookie("token",token)
     }
-    //for verification use jwt.verify(req.cookies.token,"ver")
-});
+    // for verification use jwt.verify(req.cookies.token,"ver")
 
+    res.send("OK")
+});
 })
 
-
 module.exports=router
+
+

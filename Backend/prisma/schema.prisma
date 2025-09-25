@@ -78,4 +78,3 @@ model Note {
   @@index([tenantId, createdAt])
   @@map("notes")
 }
-
