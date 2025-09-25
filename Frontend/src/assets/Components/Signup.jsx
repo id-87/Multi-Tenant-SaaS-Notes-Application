@@ -1,14 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Signup = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [role, setRole] = useState('MEMBER')
+  const [tenantId, setTenantId] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault() 
+    
+    const response = await fetch('http://localhost:4000/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password, role, tenantId })
+    })
+
+    if (response.ok) {
+      alert('Account created successfully!')
+      setEmail('')
+      setPassword('')
+      setRole('MEMBER')
+      setTenantId('')
+    } else {
+      alert('Signup failed')
+    }
+  }
+
   return (
     <div>
-      <form action="">
-        <label >Email:<input type="email" id='email' name='email' required /></label>
-        <label >Password:<input type="password" id='password' name='password' required /></label>
-        <label >Role:<input type="text" id='role' required/></label>
-        <label >Tenant Id:<input type="text" id='tenantId' required/></label>
+      <form onSubmit={handleSubmit}>
+        <label>Email:
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </label>
         
+        <label>Password:
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </label>
+        
+        <label>Role:
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="MEMBER">Member</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </label>
+        
+        <label>Tenant Id:
+          <input type="text" value={tenantId} onChange={(e) => setTenantId(e.target.value)} required />
+        </label>
+        
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   )
